@@ -18,9 +18,7 @@ dataset = pd.read_csv('IMDB-Movie-Data.csv')
 dataset
 
 cleaned = dataset.set_index('Rank').Genre.str.split(',', expand=True).stack()
-
 cleaned = pd.get_dummies(cleaned).groupby(level=0).sum()
-
 cleaned
 
 dataset_new=dataset.iloc[:, [7,8,9,11]]
@@ -29,9 +27,7 @@ data = []
 data.insert(0, {'Runtime (Minutes)':0, 'Rating':0, 'Votes':0, 'Metascore':0})
 
 ds=pd.concat([pd.DataFrame(data), dataset_new], ignore_index=True)
-
 horizontal_stack = pd.concat([cleaned, ds], axis=1)
-
 horizontal_stack
 
 horizontal_stack.drop(index=horizontal_stack.index[0], 
@@ -44,7 +40,6 @@ X = np.array(horizontal_stack)
 y=dataset.iloc[:,10].values
 
 type(y)
-
 X
 
 from sklearn.impute import SimpleImputer
@@ -70,15 +65,14 @@ X = np.array(ct.fit_transform(X))
 
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0)
-
 type(y_train)
 
 """#Feature Scaling"""
 
-from sklearn.preprocessing import StandardScaler
-sc = StandardScaler()
-X_train[:, 20:] = sc.fit_transform(X_train[:, 20:])
-X_test[:, 20:] = sc.transform(X_test[:, 20:])
+# from sklearn.preprocessing import StandardScaler
+# sc = StandardScaler()
+# X_train[:, 20:] = sc.fit_transform(X_train[:, 20:])
+# X_test[:, 20:] = sc.transform(X_test[:, 20:])
 
 X_train
 
@@ -179,7 +173,7 @@ mean_squared_error(y_test,y_pred4)
 print(regressor6.coef_)
 print(regressor6.intercept_)
 
-print(regressor.predict([[12]]))
+# print(regressor.predict([[120,7.1,240,77]]))
 
 
 

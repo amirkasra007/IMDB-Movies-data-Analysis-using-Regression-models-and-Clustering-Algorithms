@@ -12,10 +12,6 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 dataset = pd.read_csv('IMDB-Movie-Data.csv')
-# X = dataset.iloc[:, [7,8,9,11]].values
-# y = dataset.iloc[:, 10].values
-
-dataset
 
 cleaned = dataset.set_index('Rank').Genre.str.split(',', expand=True).stack()
 cleaned = pd.get_dummies(cleaned).groupby(level=0).sum()
@@ -28,19 +24,15 @@ data.insert(0, {'Runtime (Minutes)':0, 'Rating':0, 'Votes':0, 'Metascore':0})
 
 ds=pd.concat([pd.DataFrame(data), dataset_new], ignore_index=True)
 horizontal_stack = pd.concat([cleaned, ds], axis=1)
-horizontal_stack
 
 horizontal_stack.drop(index=horizontal_stack.index[0], 
         axis=0, 
         inplace=True)
 
-horizontal_stack
 
 X = np.array(horizontal_stack)
 y=dataset.iloc[:,10].values
 
-type(y)
-X
 
 from sklearn.impute import SimpleImputer
 imputer = SimpleImputer(missing_values=np.NaN, strategy='most_frequent', verbose=1)
@@ -74,7 +66,6 @@ type(y_train)
 # X_train[:, 20:] = sc.fit_transform(X_train[:, 20:])
 # X_test[:, 20:] = sc.transform(X_test[:, 20:])
 
-X_train
 
 """#XGBOOST"""
 
@@ -166,13 +157,10 @@ print(np.concatenate((y_pred6.reshape(len(y_pred6),1), y_test.reshape(len(y_test
 from sklearn.metrics import r2_score
 r2_score(y_test, y_pred6)
 
-from sklearn.metrics import mean_squared_error
+print(regressor.coef_)
+print(regressor.intercept_)
 
-mean_squared_error(y_test,y_pred4)
-
-print(regressor6.coef_)
-print(regressor6.intercept_)
-
+##predicting a single prediction
 # print(regressor.predict([[120,7.1,240,77]]))
 
 
